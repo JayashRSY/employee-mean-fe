@@ -1,0 +1,73 @@
+<div class="container py-3">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Employee Management</h2>
+    </div>
+    <div class="col ml-auto text-right">
+      <button type="button"
+        class="btn btn-outline-success"
+        (click)="openModal(content)">
+        <i class="fa fa-plus"></i>
+        Add Employee
+      </button>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-4"
+    *ngFor="let emp of employees">
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{emp}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{emp}}</h6>
+        <span class="badge badge-success"
+          [ngClass]="{
+                    'badge-success': emp =='Design',
+                    'badge-danger': emp =='Development'
+                }">{{emp}}</span>
+        <hr>
+        <button type="button"
+          class="btn btn-sm btn-outline-primary"
+          (click)="onEditEmp(emp)">Edit</button>
+        <button type="button"
+          class="btn btn-sm btn-outline-danger"
+          (click)="onDeleteEmp(emp)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<ng-template #content
+  let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{editMode?'Update':'Add'}} Employee</h4>
+    <button type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="empForm"
+      (ngSubmit)="onEmpSubmit()">
+      <div class="modal-body">
+        <label for="name">Enter name</label>
+        <input id="name"
+          type="text"
+          placeholder="Ex. John Rakon">
+        <label for="position">Enter position</label>
+        <input id="position"
+          type="text"
+          placeholder="Ex. Full Stack Developer">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button"
+      class="btn btn-outline-dark"
+      (click)="modal.close()">Save</button>
+  </div>
+</ng-template>
